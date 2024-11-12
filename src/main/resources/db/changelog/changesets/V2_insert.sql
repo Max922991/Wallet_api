@@ -1,0 +1,14 @@
+INSERT INTO wallet (wallet_id, balance)
+VALUES
+    (CAST('550e8400-e29b-41d4-a716-446655440000' AS UUID), 1000)
+ON CONFLICT (wallet_id) DO NOTHING;
+
+INSERT INTO wallet (wallet_id, balance, transaction_id)
+VALUES
+    (CAST('550e8400-e29b-41d4-a716-446655440001' AS UUID), 2000, CAST('550e8400-e29b-41d4-a716-446655440012' AS UUID))
+ON CONFLICT (wallet_id) DO NOTHING;
+
+INSERT INTO wallet (wallet_id, balance, transaction_id)
+VALUES
+    (CAST('550e8400-e29b-41d4-a716-446655440002' AS UUID), 3000, CAST('550e8400-e29b-41d4-a716-446655440013' AS UUID))
+ON CONFLICT (wallet_id) DO NOTHING;
