@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  wallet_api:
+    build:
+      context: .
+      args:
+        JAR_FILE: target/Wallet_api-0.0.1-SNAPSHOT.jar
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: walletApi
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
