@@ -28,14 +28,15 @@ public class WalletService {
     @Transactional
     @Retryable(
             maxAttempts = MAX_RETRIES,
-            backoff = @Backoff(delay = 100, multiplier = 2))
+            backoff = @Backoff(delay = 100))
     public void performOperation(WalletDto walletDto) {
 
         Wallet wallet = walletRepository.findById(walletDto.getWalletId())
                 .orElseThrow(WalletNotFoundException::new);
 
         if (wallet.getTransactionId() != null) {
-            log.info("Operation with transaction ID {} has already been performed.", wallet.getTransactionId());
+            log.info("Operation with transaction ID {} has already been performed.",
+                    wallet.getTransactionId());
             return;
         }
 
